@@ -1,0 +1,39 @@
+# Название пайплайна — отображается в интерфейсе GitHub
+name: CI
+
+# Запускаем при создании или обновлении Pull Request
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    # Виртуальная машина на Ubuntu — GitHub предоставляет её бесплатно
+    runs-on: ubuntu-latest
+
+    steps:
+      # Клонируем репозиторий на виртуальную машину
+      - uses: actions/checkout@v4
+
+      # Устанавливаем Node.js
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Устанавливаем зависимости проекта
+      - run: npm ci
+
+      # Линтинг — проверяем код на ошибки и стиль
+      - run: npm run lint
+
+      # Сборка — проверяем что проект собирается без ошибок
+      - run: npm run build
+
+      # Unit и интеграционные тесты (--run чтобы не зависнуть в watch-режиме)
+      - run: npm test -- --run
+
+      # Устанавливаем браузеры для Playwright
+      - run: npx playwright install --with-deps
+
+      # E2E тесты
+      - run: npm run test:e2e
