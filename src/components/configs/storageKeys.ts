@@ -1,0 +1,4 @@
+export enum StorageKeys {
+  CREATED_POSTS = "CREATED_POSTS",
+  REMOVED_POSTS_IDS = "REMOVED_POSTS_IDS",
+}
