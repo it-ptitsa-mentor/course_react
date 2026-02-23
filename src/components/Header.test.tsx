@@ -21,7 +21,7 @@ describe("Header — переключение темы", () => {
   });
 
   it("по умолчанию отображается светлая тема", () => {
-    expect(button).toHaveTextContent("Light Mode");
+    expect(button).toHaveTextContent("Dark Mode");
     expect(container.querySelector(".theme-light")).toBeInTheDocument();
   });
 
